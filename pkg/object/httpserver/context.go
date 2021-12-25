@@ -20,6 +20,7 @@ package httpserver
 import (
 	stdcontext "context"
 	"time"
+    "github.com/megaease/easegress/pkg/logger"
 )
 
 const (
@@ -27,6 +28,7 @@ const (
 )
 
 func serverShutdownContext() (stdcontext.Context, stdcontext.CancelFunc) {
-	ctx, cancelFunc := stdcontext.WithTimeout(stdcontext.Background(), serverShutdownTimeout)
+	logger.Infof("httpserver shutdown context.")
+    ctx, cancelFunc := stdcontext.WithTimeout(stdcontext.Background(), serverShutdownTimeout)
 	return ctx, cancelFunc
 }

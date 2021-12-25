@@ -148,16 +148,19 @@ func isURL(str string) bool {
 	// we only check the first a few bytes as str could be
 	// the LONG base64 encoded wasm code
 	for _, p := range []string{"http://", "https://"} {
-		if len(str) > len(p) {
+		logger.Infof("request , %s", str)
+        if len(str) > len(p) {
 			if p == strings.ToLower(str[:len(p)]) {
 				return true
 			}
 		}
+        logger.Infof("strings.ToLower(str[:len(p)]) , %s", strings.ToLower(str[:len(p)]))
 	}
 	return false
 }
 
 func (wh *WasmHost) readWasmCode() ([]byte, error) {
+	logger.Infof("wh.spec.Code: %s.", wh.spec.Code)
 	if isURL(wh.spec.Code) {
 		return readWasmCodeFromURL(wh.spec.Code)
 	}
