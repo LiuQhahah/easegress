@@ -39,6 +39,7 @@ import (
 func main() {
 	opt := option.New()
 	msg, err := opt.Parse()
+	logger.Infof("show msg: %v", msg)
 	if err != nil {
 		common.Exit(1, err.Error())
 	}
@@ -54,8 +55,10 @@ func main() {
 
 	logger.Init(opt)
 	defer logger.Sync()
+	logger.Infof("show version info")
 	logger.Infof("%s", version.Long)
 
+	logger.Infof("opt signal upgrade %v", opt.SignalUpgrade)
 	if opt.SignalUpgrade {
 		pid, err := pidfile.Read(opt)
 
@@ -90,6 +93,7 @@ func main() {
 		logger.Errorf("new profile failed: %v", err)
 		os.Exit(1)
 	}
+	logger.Infof("NEW cluster with opt")
 	cls, err := cluster.New(opt)
 	if err != nil {
 		logger.Errorf("new cluster failed: %v", err)

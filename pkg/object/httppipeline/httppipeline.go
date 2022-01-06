@@ -445,6 +445,7 @@ func (hp *HTTPPipeline) Handle(ctx context.HTTPContext) string {
 	filterStat := newFilterStat()
 	isEnd := false
 
+	// 闭包函数
 	handle := func(lastResult string) string {
 		// For saving the `filterIndex`'s filter generated HTTP Response.
 		// Note: the sequence of pipeline is stack-liked, we save the filter's response into template

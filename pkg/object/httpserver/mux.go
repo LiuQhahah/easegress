@@ -371,17 +371,20 @@ func (m *mux) ServeHTTP(stdw http.ResponseWriter, stdr *http.Request) {
 		m.topN.Stat(ctx)
 	})
 
+	// first find from cache
 	ci := rules.getCacheItem(ctx)
 	if ci != nil {
 		m.handleRequestWithCache(rules, ctx, ci)
 		return
 	}
 
+	// black list
 	if !rules.pass(ctx) {
 		m.handleIPNotAllow(ctx)
 		return
 	}
 
+	//match host
 	for _, host := range rules.rules {
 		if !host.match(ctx) {
 			continue
@@ -392,6 +395,7 @@ func (m *mux) ServeHTTP(stdw http.ResponseWriter, stdr *http.Request) {
 			return
 		}
 
+		//match path
 		for _, path := range host.paths {
 			if !path.matchPath(ctx) {
 				continue

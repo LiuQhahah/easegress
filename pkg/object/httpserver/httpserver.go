@@ -18,6 +18,7 @@
 package httpserver
 
 import (
+	"github.com/megaease/easegress/pkg/logger"
 	"github.com/megaease/easegress/pkg/protocol"
 	"github.com/megaease/easegress/pkg/supervisor"
 )
@@ -31,6 +32,7 @@ const (
 )
 
 func init() {
+
 	supervisor.Register(&HTTPServer{})
 }
 
@@ -63,8 +65,10 @@ func (hs *HTTPServer) DefaultSpec() interface{} {
 // Init initializes HTTPServer.
 func (hs *HTTPServer) Init(superSpec *supervisor.Spec, muxMapper protocol.MuxMapper) {
 
+	logger.Infof("init initializes HTTPServer")
 	hs.runtime = newRuntime(superSpec, muxMapper)
 
+	logger.Infof("superSpec: %v", superSpec)
 	hs.runtime.eventChan <- &eventReload{
 		nextSuperSpec: superSpec,
 		muxMapper:     muxMapper,

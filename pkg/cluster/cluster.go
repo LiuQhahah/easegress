@@ -143,6 +143,7 @@ func New(opt *option.Options) (Cluster, error) {
 	if err != nil {
 		return nil, fmt.Errorf("invalid cluster request timeout: %v", err)
 	}
+	logger.Infof("request timeout %v", requestTimeout)
 
 	// Member file，members.ClusterMembers and members.KnownMembers will be deprecated in the future.
 	// When the new configuration way (cluster.initial-cluster or cluster.primary-listen-peer-urls) is used, let's not create member
@@ -226,6 +227,7 @@ func (c *cluster) run() {
 }
 
 func (c *cluster) getReady() error {
+	logger.Infof("getReady() , ClusterRole: %v", c.opt.ClusterRole)
 	if c.opt.ClusterRole == "secondary" {
 		_, err := c.getClient()
 		if err != nil {
@@ -257,6 +259,7 @@ func (c *cluster) getReady() error {
 		}
 	}
 
+	logger.Infof("Begin start Server!")
 	done, timeout, err := c.startServer()
 	if err != nil {
 		return fmt.Errorf("start server failed: %v", err)
@@ -481,6 +484,7 @@ func (c *cluster) keepAliveLease() {
 }
 
 func (c *cluster) initLease() error {
+	logger.Infof("initLease")
 	leaseStr, err := c.Get(c.Layout().Lease())
 	if err != nil {
 		return err
@@ -496,6 +500,7 @@ func (c *cluster) initLease() error {
 	}
 
 	client, err := c.getClient()
+	logger.Infof("cluster get client!")
 	if err != nil {
 		return fmt.Errorf("get client failed: %v", err)
 	}
@@ -635,6 +640,7 @@ func closeEtcdServer(s *embed.Etcd) {
 }
 
 func (c *cluster) startServer() (done, timeout chan struct{}, err error) {
+	logger.Infof("startServer!")
 	c.serverMutex.Lock()
 	defer c.serverMutex.Unlock()
 
@@ -680,6 +686,7 @@ func (c *cluster) startServer() (done, timeout chan struct{}, err error) {
 		case <-server.Server.ReadyNotify():
 			c.server = server
 			if c.server.Config().IsNewCluster() {
+				logger.Infof("isNewCluster: %t", c.server.Config().IsNewCluster())
 				err := c.Put(c.Layout().ClusterNameKey(), c.opt.ClusterName)
 				if err != nil {
 					err = fmt.Errorf("register cluster name %s failed: %v",

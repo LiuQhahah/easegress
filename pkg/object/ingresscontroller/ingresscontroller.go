@@ -195,6 +195,7 @@ func (ic *IngressController) Close() {
 	ic.tc.Clean(ic.namespace)
 }
 
+// read k8s resource, and translate to easegress
 func (ic *IngressController) translate() error {
 	logger.Debugf("begin translate kubernetes ingress to easegress configuration")
 	st := newSpecTranslator(ic.k8sClient, ic.spec.IngressClass, ic.spec.HTTPServer)

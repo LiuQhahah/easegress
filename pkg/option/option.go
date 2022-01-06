@@ -137,22 +137,29 @@ func New() *Options {
 		viper: viper.New(),
 	}
 
+	// if the param is version will call opt.ShowVersion
 	opt.flags.BoolVarP(&opt.ShowVersion, "version", "v", false, "Print the version and exit.")
+	// if the param is help will call opt.ShowHelp function
 	opt.flags.BoolVarP(&opt.ShowHelp, "help", "h", false, "Print the helper message and exit.")
 	opt.flags.BoolVarP(&opt.ShowConfig, "print-config", "c", false, "Print the configuration.")
 	opt.flags.StringVarP(&opt.ConfigFile, "config-file", "f", "", "Load server configuration from a file(yaml format), other command line flags will be ignored if specified.")
 	opt.flags.BoolVar(&opt.ForceNewCluster, "force-new-cluster", false, "Force to create a new one-member cluster.")
 	opt.flags.BoolVar(&opt.SignalUpgrade, "signal-upgrade", false, "Send an upgrade signal to the server based on the local pid file, then exit. The original server will start a graceful upgrade after signal received.")
+	// example ./easegress-server --name eg-qiang-name
 	opt.flags.StringVar(&opt.Name, "name", "eg-default-name", "Human-readable name for this member.")
 	opt.flags.StringToStringVar(&opt.Labels, "labels", nil, "The labels for the instance of Easegress.")
 	addClusterVars(opt)
 	opt.flags.StringVar(&opt.APIAddr, "api-addr", "localhost:2381", "Address([host]:port) to listen on for administration traffic.")
+	// example ./easegress-server --debug true
 	opt.flags.BoolVar(&opt.Debug, "debug", false, "Flag to set lowest log level from INFO downgrade DEBUG.")
 	opt.flags.StringSliceVar(&opt.InitialObjectConfigFiles, "initial-object-config-files", nil, "List of configuration files for initial objects, these objects will be created at startup if not already exist.")
 
+	// set home path
 	opt.flags.StringVar(&opt.HomeDir, "home-dir", "./", "Path to the home directory.")
+	// set data path
 	opt.flags.StringVar(&opt.DataDir, "data-dir", "data", "Path to the data directory.")
 	opt.flags.StringVar(&opt.WALDir, "wal-dir", "", "Path to the WAL directory.")
+	// set log path
 	opt.flags.StringVar(&opt.LogDir, "log-dir", "log", "Path to the log directory.")
 	opt.flags.StringVar(&opt.MemberDir, "member-dir", "member", "Path to the member directory.")
 

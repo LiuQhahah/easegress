@@ -18,6 +18,7 @@
 package logger
 
 import (
+	"github.com/nacos-group/nacos-sdk-go/common/logger"
 	"os"
 	"path/filepath"
 	"time"
@@ -141,6 +142,7 @@ func initDefault(opt *option.Options) {
 }
 
 func initHTTPFilter(opt *option.Options) {
+	logger.Infof("initHTTPFilter")
 	httpFilterAccessLogger = newPlainLogger(opt, filterHTTPAccessFilename, trafficLogMaxCacheCount)
 	httpFilterDumpLogger = newPlainLogger(opt, filterHTTPDumpFilename, trafficLogMaxCacheCount)
 }

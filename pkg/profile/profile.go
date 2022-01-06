@@ -55,6 +55,7 @@ func New(opt *option.Options) (Profile, error) {
 
 func (p *profile) startCPUProfile() error {
 	if p.opt.CPUProfileFile == "" {
+		logger.Infof("CPUProfileFile equal null")
 		return nil
 	}
 

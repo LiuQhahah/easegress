@@ -20,6 +20,7 @@ package logger
 import (
 	"bytes"
 	"fmt"
+	"github.com/nacos-group/nacos-sdk-go/common/logger"
 	"os"
 	"os/signal"
 	"syscall"
@@ -63,7 +64,7 @@ func newLogFile(filename string, maxCacheCount uint32) (*logFile, error) {
 		maxCacheCount: maxCacheCount,
 		cache:         bytes.NewBuffer(nil),
 	}
-
+	logger.Infof("init new log file: %v .", filename)
 	err := lf.openFile()
 	if err != nil {
 		return nil, err

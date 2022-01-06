@@ -17,7 +17,10 @@
 
 package cluster
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/megaease/easegress/pkg/logger"
+)
 
 // Cluster store tree layout.
 // Status means dynamic, different in every member.
@@ -49,6 +52,7 @@ type (
 )
 
 func (c *cluster) initLayout() {
+	logger.Infof("init Layout memberName: %v", c.opt.Name)
 	c.layout = &Layout{
 		memberName: c.opt.Name,
 	}

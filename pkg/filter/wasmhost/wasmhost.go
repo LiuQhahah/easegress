@@ -149,12 +149,12 @@ func isURL(str string) bool {
 	// the LONG base64 encoded wasm code
 	for _, p := range []string{"http://", "https://"} {
 		logger.Infof("request , %s", str)
-        if len(str) > len(p) {
+		if len(str) > len(p) {
 			if p == strings.ToLower(str[:len(p)]) {
 				return true
 			}
 		}
-        logger.Infof("strings.ToLower(str[:len(p)]) , %s", strings.ToLower(str[:len(p)]))
+		logger.Infof("strings.ToLower(str[:len(p)]) , %s", strings.ToLower(str[:len(p)]))
 	}
 	return false
 }

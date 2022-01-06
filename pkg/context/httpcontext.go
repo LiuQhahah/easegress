@@ -44,6 +44,7 @@ type (
 	// It is not goroutine-safe, callers must use Lock/Unlock
 	// to protect it by themselves.
 	HTTPContext interface {
+		// 后端处理一台请求服务器还有一台mirror服务器，加快并发
 		Lock()
 		Unlock()
 

@@ -37,6 +37,7 @@ var pidfilePath string
 func Write(opt *option.Options) error {
 	pidfilePath = filepath.Join(opt.AbsHomeDir, pidfileName)
 
+	logger.Infof("pid file path: %v", pidfilePath)
 	err := os.WriteFile(pidfilePath, []byte(fmt.Sprintf("%d", os.Getpid())), 0o644)
 	if err != nil {
 		logger.Errorf("write %s failed: %s", pidfilePath, err)

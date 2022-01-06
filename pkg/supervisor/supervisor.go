@@ -87,6 +87,7 @@ func MustNew(opt *option.Options, cls cluster.Cluster) *Supervisor {
 		done:            make(chan struct{}),
 	}
 
+	logger.Infof("MustNew creates a Supervisor.")
 	initObjs := loadInitialObjects(s, opt.InitialObjectConfigFiles)
 
 	s.objectRegistry = newObjectRegistry(s, initObjs)
@@ -96,7 +97,7 @@ func MustNew(opt *option.Options, cls cluster.Cluster) *Supervisor {
 		CategoryBusinessController))
 
 	globalSuper = s
-
+	logger.Infof("MustNew a initSystemControllers.")
 	s.initSystemControllers()
 
 	go s.run()

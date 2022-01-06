@@ -79,6 +79,7 @@ func MustNewServer(opt *option.Options, cluster cluster.Cluster, super *supervis
 		s.server.ListenAndServe()
 	}()
 
+	logger.Infof("MustNewServer creates an api server.")
 	return s
 }
 
